@@ -27,7 +27,7 @@ function Navbar() {
             <Link to="/">Home</Link>
           </NavItemStyled>
           <NavItemStyled>
-            <Link to="/users">Shutterbugs</Link>
+            <Link to="/images">Images</Link>
           </NavItemStyled>
           <NavItemStyled>
             <Link to="/albums">Albums</Link>

@@ -1,13 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function AlbumList({ album, user }) {
+export default function AlbumList({ album, user, photosCount }) {
   return (
     <List>
-      <ListItem>
-        <ListItemTitle>{album.title}</ListItemTitle>
-        <ListItemSubtitle>PhotoGrapher: {user.name}</ListItemSubtitle>
-      </ListItem>
+      <AlbumLink to={`/albums/${album.id}`}>
+        <ListItem>
+          <ListItemTitle>{album.title}</ListItemTitle>
+          <ListItemSubtitle>PhotoGrapher: {user.name}</ListItemSubtitle>
+          <ListItemSubtitle>Photos: {photosCount}</ListItemSubtitle>
+        </ListItem>
+      </AlbumLink>
     </List>
   );
 }
@@ -47,4 +51,8 @@ const ListItemSubtitle = styled.h2`
   text-transform: capitalize;
   margin: 10px;
   padding: 10px;
+`;
+
+const AlbumLink = styled(Link)`
+  text-decoration: none;
 `;

@@ -3,47 +3,53 @@ import { useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import { useParams, useNavigate } from 'react-router-dom';
 import Loader from 'components/Loader';
-import AlbumList from 'components/AlbumList';
+import ImageCard from 'components/ImageCard';
 import Container from 'components/PageContainer';
+
 import {
-  getBaseData,
   getIsLoading,
   getNormalizedData,
+  getBaseData,
 } from 'redux-store/slice/mainSlice';
 
-export default function Albums() {
+function Album() {
   const navigate = useNavigate();
-  const { page = 0 } = useParams();
-  const [itemsPerPage] = useState(24);
+  const { page = 0, id } = useParams();
+  const [itemsPerPage] = useState(25);
   const isLoading = useSelector(getIsLoading);
-  const { users, photos } = useSelector(getNormalizedData);
+  const { albums: albumsBase } = useSelector(getBaseData);
+  const { users, photos: photoS } = useSelector(getNormalizedData);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const { albums = [] } = useSelector(getBaseData);
+  const photos = photoS[id];
   const [currentItems, setCurrentItems] = useState([]);
+  const currentAlbum = albumsBase.filter((a) => a.id === +id)[0] || {};
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(albums.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(albums.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, albums]);
+    setCurrentItems(photos.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(photos.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, photos]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % albums.length;
+    const newOffset = (event.selected * itemsPerPage) % photos.length;
     setItemOffset(newOffset);
-    navigate(event.selected ? `/albums/${event.selected + 1}` : `/albums`);
+    navigate(
+      event.selected ? `/albums/${id}/${event.selected + 1}` : `/albums/${id}`
+    );
   };
 
   return (
     <>
       <Container>
         {isLoading ? <Loader /> : null}
-        {currentItems.map((album) => (
-          <AlbumList
-            key={album.id}
-            album={album}
-            user={users[album.userId]}
-            photosCount={photos[album.id].length}
+        {currentItems.map((photo) => (
+          <ImageCard
+            key={photo.id}
+            img={photo.url}
+            title={photo.title}
+            album={currentAlbum}
+            user={users[currentAlbum.userId]}
           />
         ))}
       </Container>
@@ -73,3 +79,5 @@ export default function Albums() {
     </>
   );
 }
+
+export default Album;

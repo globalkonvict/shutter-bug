@@ -31,8 +31,8 @@ const callAllApi = async () => {
   });
 
   albumRes.forEach((album) => {
-    normalizedData.albums[album.id] = [
-      ...(normalizedData.albums[album.id] || []),
+    normalizedData.albums[album.userId] = [
+      ...(normalizedData.albums[album.userId] || []),
       album,
     ];
   });

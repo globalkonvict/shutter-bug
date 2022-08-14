@@ -11,11 +11,15 @@ import {
 
 export default function Users() {
   const { users = [] } = useSelector(getBaseData);
+  const { albums = {} } = useSelector(getNormalizedData);
 
   return (
     <Container>
       {users.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <UserCard
+          key={user.id}
+          user={{ ...user, albumCount: albums[user.id].length }}
+        />
       ))}
     </Container>
   );

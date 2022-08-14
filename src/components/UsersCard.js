@@ -1,15 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import photographer from 'assets/photographer.png';
+import { Link } from 'react-router-dom';
 
 export default function UsersCard({ user }) {
   return (
-    <Card>
-      <UserImage src={photographer} alt="user" />
-      <UserName>{user.name}</UserName>
-      <p>Email: {user.email}</p>
-      <p>Website: {user.website}</p>
-    </Card>
+    <UserLink to={`/users/${user.id}`}>
+      <Card>
+        <UserImage src={photographer} alt="user" />
+        <UserName>{user.name}</UserName>
+        <p>Albums: {user.albumCount}</p>
+        <p>Email: {user.email}</p>
+        <p>Website: {user.website}</p>
+      </Card>
+    </UserLink>
   );
 }
 
@@ -39,4 +43,8 @@ const UserName = styled.h1`
   color: #0d6efd;
   text-align: center;
   text-transform: capitalize;
+`;
+
+const UserLink = styled(Link)`
+  text-decoration: none;
 `;

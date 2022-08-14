@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import album from 'assets/book.png';
+import albumImg from 'assets/book.png';
 import photographer from 'assets/photographer.png';
 import loadingError from 'assets/loading error.gif';
 
-function ImageCard({ img, title, albumName, userName }) {
+function ImageCard({ img, title, album, user }) {
   const [isLoadingFailed, setIsLoading] = useState(false);
   const handleLoadingError = () => {
     setIsLoading(true);
@@ -20,10 +20,10 @@ function ImageCard({ img, title, albumName, userName }) {
         alt="image"
       />
       <Title>{title}</Title>
-      <AlbumIcon src={album} alt="album" />
-      <AlbumLink to="/albums">{albumName}</AlbumLink>
+      <AlbumIcon src={albumImg} alt="album" />
+      <AlbumLink to={`/albums/${album.id}`}>{album.title}</AlbumLink>
       <PhotographerIcon src={photographer} alt="photographer" />
-      <PhotographerLink to="/users">{userName}</PhotographerLink>
+      <PhotographerLink to={`/users/${user.id}`}>{user.name}</PhotographerLink>
     </ImageCardContainer>
   );
 }
@@ -52,7 +52,7 @@ const Image = styled.img`
 
 const Title = styled.p`
   font-size: 14px;
-  font-weight: light;
+  font-weight: bolder;
   margin: 0;
   padding: 0 8px;
   position: absolute;

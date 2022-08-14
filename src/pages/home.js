@@ -31,7 +31,7 @@ function Home() {
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % photos.length;
     setItemOffset(newOffset);
-    navigate(event.selected ? `/${event.selected + 1}` : `/`);
+    navigate(event.selected ? `/images/${event.selected + 1}` : `/images`);
   };
 
   return (
@@ -43,8 +43,8 @@ function Home() {
             key={photo.id}
             img={photo.url}
             title={photo.title}
-            albumName={albums[photo.albumId][0].title}
-            userName={users[albums[photo.albumId][0].userId].name}
+            album={albums[photo.albumId][0]}
+            user={users[albums[photo.albumId][0].userId]}
           />
         ))}
       </Container>

@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
  */
 networkErrorHandler();
 
-const { Home, Users, Albums, About } = pages;
+const { Home, Users, Albums, About, User, Album } = pages;
 
 function App() {
   const dispatch = useDispatch();
@@ -38,10 +38,17 @@ function App() {
   return (
     <Layout className="App">
       <Routes>
-        <Route path="/" element={!isLoading ? <Home /> : null} />
-        <Route path="/:page" element={!isLoading ? <Home /> : null} />
+        <Route path="/" element={<Users />} />
+        <Route path="images" element={!isLoading ? <Home /> : null} />
+        <Route path="images/:page" element={!isLoading ? <Home /> : null} />
         <Route path="users" element={<Users />} />
+        <Route path="users/:id" element={<User />} />
         <Route path="albums" element={!isLoading ? <Albums /> : null} />
+        <Route path="albums/:id" element={!isLoading ? <Album /> : null} />
+        <Route
+          path="albums/:id/:page"
+          element={!isLoading ? <Album /> : null}
+        />
         <Route path="albums/:page" element={!isLoading ? <Albums /> : null} />
         <Route path="about" element={<About />} />
       </Routes>
